@@ -1,0 +1,24 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var express_1 = __importDefault(require("express"));
+var multer_1 = __importDefault(require("multer"));
+var FileController_1 = __importDefault(require("./controllers/FileController"));
+var ConcludeController_1 = __importDefault(require("./controllers/ConcludeController"));
+var SupervisorController_1 = __importDefault(require("./controllers/SupervisorController"));
+var PromoterController_1 = __importDefault(require("./controllers/PromoterController"));
+var routes = express_1.default.Router();
+var upload = multer_1.default({ dest: 'uploads/' });
+var fileController = new FileController_1.default();
+var concludeController = new ConcludeController_1.default();
+var supervisorController = new SupervisorController_1.default();
+var promoterController = new PromoterController_1.default();
+routes.get('/conclude', concludeController.index);
+routes.get('/conclude/:id', concludeController.show);
+routes.put('/conclude/:id', concludeController.update);
+routes.get('/supervisor', supervisorController.index);
+routes.get('/promoter', promoterController.index);
+routes.post('/upload', upload.single("conclude"), fileController.create);
+exports.default = routes;
